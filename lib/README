@@ -4,7 +4,7 @@ Written by Bill MacCartney <wcmac@cs.stanford.edu> 23 January 2006
 Updated by Daniel Ramage 16 October 2006
 
 This directory is intended to contain only *current and necessary*
-.jar files used with JavaNLP-core.  
+.jar files used with JavaNLP-core.
 
 Our original model was that each jar file in lib should be without
 its version number but include a corresponding source .zip/.jar file
@@ -30,7 +30,7 @@ If you're adding a new .jar to the repository, please:
    embedded which overlap with other javanlp libraries, please remove them.
    Normally we then give the jar a name ending in "x" to show we modified it.
  - update the Eclipse .classpath file to include the jar and a path
-   to its source -- this is essential to keep things working for 
+   to its source -- this is essential to keep things working for
    Eclipse/IntelliJ users!
  - also update this file with information about the jar
  - If it will be needed by releases of CoreNLP, also add it to the *2* pom files.
@@ -271,12 +271,12 @@ LAST UPDATE: 2016-07-08
 LAST UPDATE BY: Angel Chang
 
 -----------------------------------------------------------------------
-jollyday-0.4.9.jar
-ORIGINAL JAR NAME: jollyday-0.4.9.jar
-VERSION: 0.4.9
-RELEASE DATE: 2015-05-06
+jollyday-0.5.5.jar
+ORIGINAL JAR NAME: jollyday-0.5.5.jar
+VERSION: 0.5.5
+RELEASE DATE: 2018-03-25
 SOURCE AVAILABLE: yes
-DESCRIPTION: API for holidays (using jodatime)
+DESCRIPTION: API for holidays
 URL: http://jollyday.sourceforge.net
 
 USED BY: edu.stanford.nlp.time

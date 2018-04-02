@@ -93,7 +93,7 @@
     <javac srcdir="${source.path}:${tests.path}:${itests.path}"
           destdir="${build.path}"
             debug="${compile.debug}"
-         encoding="${compile.encoding}" 
+         encoding="${compile.encoding}"
       deprecation="${compile.deprecation}"
          optimize="${compile.optimize}"
            source="${compile.source}"
@@ -265,11 +265,11 @@
 
       <!-- First, compile the .jsp into .java -->
       <jasper2
-         validateXml="false" 
-         uriroot="${source.path}/@{webapp.path}" 
-         webXmlFragment="${source.path}/@{webapp.path}/WEB-INF/generated.xml" 
+         validateXml="false"
+         uriroot="${source.path}/@{webapp.path}"
+         webXmlFragment="${source.path}/@{webapp.path}/WEB-INF/generated.xml"
          addWebXmlMappings="true"
-         outputDir="${build.path}/@{webapp.path}/WEB-INF/src" /> 
+         outputDir="${build.path}/@{webapp.path}/WEB-INF/src" />
 
       <mkdir dir="${build.path}/@{webapp.path}/WEB-INF/classes"/>
 
@@ -277,8 +277,8 @@
       <javac destdir="${build.path}/@{webapp.path}/WEB-INF/classes"
              optimize="${compile.optimize}"
              encoding="${compile.encoding}"
-             debug="${compile.debug}" 
-             srcdir="${build.path}/@{webapp.path}/WEB-INF/src" 
+             debug="${compile.debug}"
+             srcdir="${build.path}/@{webapp.path}/WEB-INF/src"
              includeantruntime="false"
                   excludes="**/*.smap">
         <classpath refid="webapp.classpath"/>
@@ -290,7 +290,7 @@
 
       <!-- Now, build a .war out of the compiled java and all of the
            specified libraries. -->
-      <war destfile="@{webapp.war}" 
+      <war destfile="@{webapp.war}"
            webxml="${source.path}/@{webapp.path}/WEB-INF/web.xml">
         <classes dir="${build.path}/@{webapp.path}/WEB-INF/classes"/>
         <webapp.lib/>
@@ -313,7 +313,8 @@
         <include name="commons-lang3-3.1.jar"/>
         <include name="xom-1.2.10.jar"/>
         <include name="joda-time.jar"/>
-        <include name="jollyday-0.4.9.jar"/>
+        <include name="threeten-extra-1.3.2.jar"/>
+        <include name="jollyday-0.5.5.jar"/>
       </lib>
       <zipfileset prefix="WEB-INF/data"
                   file="/u/nlp/data/pos-tagger/distrib/english-left3words-distsim.tagger"/>
@@ -330,7 +331,7 @@
       <zipfileset file="${source.path}/edu/stanford/nlp/time/suservlet/prototype.js"/>
     </war>
   </target>
-  
+
   <target name="openie.war" depends="compile,jar"
           description="build the openie webapp">
     <war destfile="openie.war"
@@ -448,7 +449,8 @@
         <include name="xom-1.2.10.jar"/>
         <include name="xml-apis.jar"/>
         <include name="joda-time.jar"/>
-        <include name="jollyday-0.4.9.jar"/>
+        <include name="threeten-extra-1.3.2.jar"/>
+        <include name="jollyday-0.5.5.jar"/>
       </lib>
       <!-- note for John: c:/Users/John Bauer/nlp/stanford-releases -->
       <lib dir="/u/nlp/data/StanfordCoreNLPModels">

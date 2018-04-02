@@ -3,7 +3,6 @@ package edu.stanford.nlp.time;
 import de.jollyday.HolidayManager;
 import de.jollyday.config.Configuration;
 import de.jollyday.config.Holidays;
-// import de.jollyday.configuration.ConfigurationProvider;
 import de.jollyday.impl.DefaultHolidayManager;
 import de.jollyday.parameter.UrlManagerParameter;
 import edu.stanford.nlp.ling.tokensregex.Env;
@@ -15,8 +14,9 @@ import org.joda.time.Partial;
 import edu.stanford.nlp.util.logging.Redwood;
 
 import java.lang.reflect.Method;
-// import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.Instant;
+import java.time.LocalDate;
 import java.util.*;
 
 /**
@@ -208,7 +208,10 @@ public class JollyDayHolidays implements Env.Binder {
       // Try to find this holiday
       for (de.jollyday.Holiday h : holidays) {
         if (h.getPropertiesKey().equals(base.getDescriptionPropertiesKey())) {
-          return new SUTime.PartialTime(this, new Partial(h.getDate()));
+          LocalDate hollyDate = h.getDate();
+          org.joda.time.LocalDate date =
+                  org.joda.time.LocalDate.fromDateFields(Date.from(Instant.from(hollyDate)));
+          return new SUTime.PartialTime(this, new Partial(date));
         }
       }
       return null;
