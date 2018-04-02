@@ -212,7 +212,7 @@ public class JodaTimeUtils {
   };
 
   // Helper functions for working with joda time type
-  protected static boolean hasField(ReadablePartial base, DateTimeFieldType field)
+  public static boolean hasField(ReadablePartial base, DateTimeFieldType field)
   {
     if (base == null) {
       return false;
@@ -243,7 +243,7 @@ public class JodaTimeUtils {
     }
   }
 
-  protected static boolean hasField(ReadablePeriod base, DurationFieldType field)
+  public static boolean hasField(ReadablePeriod base, DurationFieldType field)
   {
     if (base == null) {
       return false;
@@ -252,7 +252,7 @@ public class JodaTimeUtils {
     }
   }
 
-  protected static Partial setField(Partial base, DateTimeFieldType field, int value) {
+  public static Partial setField(Partial base, DateTimeFieldType field, int value) {
     if (base == null) {
       return new Partial(field, value);
     } else {
@@ -360,17 +360,18 @@ public class JodaTimeUtils {
     }
     return p;
   }
-  protected static DateTimeFieldType getMostGeneral(Partial p)
+  public static DateTimeFieldType getMostGeneral(Partial p)
   {
     if (p.size() > 0) { return p.getFieldType(0); }
     return null;
   }
-  protected static DateTimeFieldType getMostSpecific(Partial p)
+  public static DateTimeFieldType getMostSpecific(Partial p)
   {
     if (p.size() > 0) { return p.getFieldType(p.size()-1); }
     return null;
   }
-  protected static DurationFieldType getMostGeneral(Period p)
+
+  public static DurationFieldType getMostGeneral(Period p)
   {
     for (int i = 0; i < p.size(); i++) {
       if (p.getValue(i) != 0) {
@@ -379,7 +380,8 @@ public class JodaTimeUtils {
     }
     return null;
   }
-  protected static DurationFieldType getMostSpecific(Period p)
+
+  public static DurationFieldType getMostSpecific(Period p)
   {
     for (int i = p.size()-1; i >= 0; i--) {
       if (p.getValue(i) != 0) {
@@ -388,7 +390,8 @@ public class JodaTimeUtils {
     }
     return null;
   }
-  protected static Period getJodaTimePeriod(Partial p)
+
+  public static Period getJodaTimePeriod(Partial p)
   {
     if (p.size() > 0) {
       DateTimeFieldType dtType = p.getFieldType(p.size()-1);

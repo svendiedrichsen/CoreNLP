@@ -9,7 +9,7 @@ import edu.stanford.nlp.pipeline.AnnotationPipeline;
 import edu.stanford.nlp.pipeline.POSTaggerAnnotator;
 import edu.stanford.nlp.pipeline.TokenizerAnnotator;
 import edu.stanford.nlp.pipeline.WordsToSentencesAnnotator;
-import edu.stanford.nlp.time.SUTime.Temporal;
+import edu.stanford.nlp.time.temporal.Temporal;
 
 import edu.stanford.nlp.util.CoreMap;
 import edu.stanford.nlp.util.Generics;

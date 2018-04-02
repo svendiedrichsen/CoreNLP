@@ -5,16 +5,12 @@ import edu.stanford.nlp.ling.CoreAnnotation;
 import edu.stanford.nlp.ling.CoreAnnotations;
 import edu.stanford.nlp.pipeline.Annotation;
 import edu.stanford.nlp.pipeline.Annotator;
+import edu.stanford.nlp.time.temporal.TimeIndex;
 import edu.stanford.nlp.util.CoreMap;
 import edu.stanford.nlp.util.logging.Redwood;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.List;
-import java.util.Properties;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Annotate temporal expressions in text with {@link SUTime}.
@@ -192,7 +188,7 @@ public class TimeAnnotator implements Annotator  {
 
   @Override
   public void annotate(Annotation annotation) {
-    SUTime.TimeIndex timeIndex = new SUTime.TimeIndex();
+    TimeIndex timeIndex = new TimeIndex();
     String docDate = annotation.get(CoreAnnotations.DocDateAnnotation.class);
     if (docDate == null) {
       Calendar cal = annotation.get(CoreAnnotations.CalendarAnnotation.class);
@@ -241,7 +237,7 @@ public class TimeAnnotator implements Annotator  {
    *
    * @return A list of CoreMap.  Each CoreMap represents a detected temporal expression.
    */
-  public List<CoreMap> annotateSingleSentence(CoreMap sentence, String docDate, SUTime.TimeIndex timeIndex) {
+  public List<CoreMap> annotateSingleSentence(CoreMap sentence, String docDate, TimeIndex timeIndex) {
     CoreMap annotationCopy = NumberSequenceClassifier.alignSentence(sentence);
     if (docDate != null && docDate.isEmpty()) {
       docDate = null;

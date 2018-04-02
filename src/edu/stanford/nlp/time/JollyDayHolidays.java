@@ -6,6 +6,7 @@ import de.jollyday.config.Holidays;
 import de.jollyday.impl.DefaultHolidayManager;
 import de.jollyday.parameter.UrlManagerParameter;
 import edu.stanford.nlp.ling.tokensregex.Env;
+import edu.stanford.nlp.time.temporal.*;
 import edu.stanford.nlp.util.CollectionValuedMap;
 import edu.stanford.nlp.util.Generics;
 import org.joda.time.DateTimeFieldType;
@@ -151,7 +152,7 @@ public class JollyDayHolidays implements Env.Binder {
     }
   }
 
-  public static class JollyHoliday extends SUTime.Time {
+  public static class JollyHoliday extends Time {
 
     private static final long serialVersionUID = -1479143694893729803L;
 
@@ -180,21 +181,21 @@ public class JollyDayHolidays implements Env.Binder {
     public boolean isGrounded()  { return false; }
 
     @Override
-    public SUTime.Time getTime() { return this; }
+    public Time getTime() { return this; }
 
     // TODO: compute duration/range => uncertainty of this time
     @Override
-    public SUTime.Duration getDuration() { return SUTime.DURATION_NONE; }
+    public Duration getDuration() { return SUTime.DURATION_NONE; }
 
     @Override
-    public SUTime.Range getRange(int flags, SUTime.Duration granularity) { return new SUTime.Range(this,this); }
+    public Range getRange(int flags, Duration granularity) { return new Range(this,this); }
 
     @Override
     public String toISOString() { return base.toString(); }
 
     @Override
-    public SUTime.Time intersect(SUTime.Time t) {
-      SUTime.Time resolved = resolve(t, 0);
+    public Time intersect(Time t) {
+      Time resolved = resolve(t, 0);
       if (resolved != this) {
         return resolved.intersect(t);
       } else {
@@ -202,7 +203,7 @@ public class JollyDayHolidays implements Env.Binder {
       }
     }
 
-    private SUTime.Time resolveWithYear(int year) {
+    private Time resolveWithYear(int year) {
       // TODO: If we knew location of article, can use that information to resolve holidays better
       Set<de.jollyday.Holiday> holidays = holidayManager.getHolidays(year);
       // Try to find this holiday
@@ -211,19 +212,19 @@ public class JollyDayHolidays implements Env.Binder {
           LocalDate hollyDate = h.getDate();
           org.joda.time.LocalDate date =
                   org.joda.time.LocalDate.fromDateFields(Date.from(Instant.from(hollyDate)));
-          return new SUTime.PartialTime(this, new Partial(date));
+          return new PartialTime(this, new Partial(date));
         }
       }
       return null;
     }
 
     @Override
-    public SUTime.Time resolve(SUTime.Time t, int flags) {
+    public Time resolve(Time t, int flags) {
       Partial p = (t != null)? t.getJodaTimePartial():null;
       if (p != null) {
         if (JodaTimeUtils.hasField(p, DateTimeFieldType.year())) {
           int year = p.get(DateTimeFieldType.year());
-          SUTime.Time resolved = resolveWithYear(year);
+          Time resolved = resolveWithYear(year);
           if (resolved != null) {
             return resolved;
           }
@@ -233,24 +234,24 @@ public class JollyDayHolidays implements Env.Binder {
     }
 
     @Override
-    public SUTime.Temporal next() {
+    public Temporal next() {
       // TODO: Handle holidays that are not yearly
-      return new SUTime.RelativeTime(
-        new SUTime.RelativeTime(SUTime.TemporalOp.NEXT, SUTime.YEAR, SUTime.RESOLVE_TO_FUTURE),
+      return new RelativeTime(
+        new RelativeTime(SUTime.TemporalOp.NEXT, SUTime.YEAR, SUTime.RESOLVE_TO_FUTURE),
         SUTime.TemporalOp.INTERSECT, this);
     }
 
     @Override
-    public SUTime.Temporal prev() {
+    public Temporal prev() {
       // TODO: Handle holidays that are not yearly
-      return new SUTime.RelativeTime(
-        new SUTime.RelativeTime(SUTime.TemporalOp.PREV, SUTime.YEAR, SUTime.RESOLVE_TO_PAST),
+      return new RelativeTime(
+        new RelativeTime(SUTime.TemporalOp.PREV, SUTime.YEAR, SUTime.RESOLVE_TO_PAST),
           SUTime.TemporalOp.INTERSECT, this);
     }
 
     @Override
-    public SUTime.Time add(SUTime.Duration offset) {
-      return new SUTime.RelativeTime(this, SUTime.TemporalOp.OFFSET_EXACT, offset);
+    public Time add(Duration offset) {
+      return new RelativeTime(this, SUTime.TemporalOp.OFFSET_EXACT, offset);
     }
   }
 
